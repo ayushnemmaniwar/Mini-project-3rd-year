@@ -1,23 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
-
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/js/bootstrap.bundle'
+import Login from './components/Login';
+import {auth,db} from './components/firebase';
+import { useEffect, useState } from "react";
+import Navbar from './components/Navbar';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Images from './components/Images';
+import Myimages from './components/Myimages';
+import Home from './components/Home';
+import Mission from './components/Mission';
+import About from './components/About';
+import Footer from './components/Footer';
+import Contact from './components/Contact';
 function App() {
+  const [user, setUser] = useState(auth.currentUser);
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+    return unsubscribe;
+  }, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        {
+          user?(<Router>
+            <Navbar/>
+            <Switch>
+              <Route exact path="/">
+                  <Images/>
+              </Route>
+              <Route exact path="/images">
+                    <Images/>
+              </Route>
+              <Route exact path="/myimages"> 
+                    <Myimages/>
+              </Route>
+              <Route exact path="/about"> 
+                    <About/>
+              </Route>
+              <Route exact path="/contact"> 
+                    <Contact/>
+              </Route>
+              <Route exact path="/mission"> 
+                    <Mission/>
+              </Route>
+            </Switch>
+            <Footer/>
+          </Router>
+            ):(<Login/>)
+        }
     </div>
   );
 }

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="number" id="num" name="num" value="num">
+    <label for="num">Enter number</label><br><br>
+    <button onClick="fun()">click</button>
+    <p id="prt"></p>
+    <script>
+        function fun()
+        {
+            var x=document.getElementById("num").value;
+            if(x>=0 && x<=999)
+            {
+                document.getElementById("prt").innerHTML="in range"
+            }
+            else{
+                document.getElementById("prt").innerHTML="out of range"
+            }
+        }
+    </script>
+</body>
+</html>
